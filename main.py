@@ -10,14 +10,14 @@ import google.generativeai as genai
 app = FastAPI()
 
 # Google API configuration
-GOOGLE_API_KEY = "AIzaSyDKJNuipzxjT12FLvbMwoOP83keVAvXSDk"
+GOOGLE_API_KEY = "AIzaSyB64oXR9utnuTnh4RKiOyLhdUHWjua-cn8"
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Create output folder if it doesn't exist
 output_folder = "static/output"
 if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+    os.makedirs(output_folder)  
 output_path = os.path.join(output_folder, "output.mp4")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -52,7 +52,7 @@ async def upload_video(request: Request, file: UploadFile = File(...)):
         ]
     )
 
-    response = chat_session.send_message("""Please provide a list of most important scenes from this video, with timestamps in the format 0:00-0:08, focusing on the most significant or memorable moments. 
+    response = chat_session.send_message("""Please provide a list of most important scenes**upto 20 scenes** from this video, with timestamps in the format 0:00-0:08, focusing on the most significant or memorable moments. 
 
     **Only provide timestamps within the video's actual duration.**
 
